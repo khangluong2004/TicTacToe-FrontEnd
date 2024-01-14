@@ -9,7 +9,7 @@ const O = 'O';
 
 const Cell = ({value, tickCell}) => {
     return(
-        <button className="w-24 h-24 bg-black text-white" onClick={tickCell}>
+        <button className="w-24 h-24 bg-black text-white text-xl font-bold border-2 border-white" onClick={tickCell}>
             {value}
         </button>
     )
@@ -22,6 +22,10 @@ const Board = (props) => {
     const [isX, setIsX] = useState(true);
 
     const tickCell = (i) => {
+        if (boardState[i] != null){
+            return;
+        }
+        
         let newBoardState = [...boardState]
         newBoardState[i] = isX ? X : O
         setIsX(!isX)
@@ -29,7 +33,7 @@ const Board = (props) => {
     }
 
     // Create the structure for the board
-    boardMap = []
+    let boardMap = []
 
     for (let i = 0; i < TABLE_SIZE; i++){
         if (i % 4 == 0){
@@ -39,15 +43,18 @@ const Board = (props) => {
         boardMap[boardMap.length - 1].push(i)
     }
 
+
     return (
         <div>
             {boardMap.map(row => {
                 return (
-                    <div>
-                        {row.map(cell => <Cell value={boardState[cell]} tickCell={tickCell}/>)}
+                    <div className="flex justify-center h-24">
+                        {row.map(cell => <Cell value={boardState[cell]} tickCell={() => tickCell(cell)}/>)}
                     </div>
                 )
             })}
         </div>
     )
 }
+
+export default Board
