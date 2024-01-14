@@ -10,7 +10,7 @@ const O = 'O';
 function checkWinning(boardState){
     // Check rows
     for (let i=0; i < DIM; i++){
-        let firstCell = boardState[i][0];
+        let firstCell = boardState[i * DIM];
 
         if (firstCell == null){
             continue;
@@ -18,7 +18,7 @@ function checkWinning(boardState){
 
         let found = true;
         for (let j=1; j < DIM; j++){
-            if (boardState[i][j] != firstCell){
+            if (boardState[i * DIM + j] != firstCell){
                 found = false;
                 break;
             }
@@ -31,7 +31,7 @@ function checkWinning(boardState){
 
     // Check columns
     for (let j=0; j < DIM; j++){
-        let firstCell = boardState[0][j];
+        let firstCell = boardState[j];
 
         if (firstCell == null){
             continue;
@@ -39,7 +39,7 @@ function checkWinning(boardState){
         
         let found = true;
         for (let i=1; i < DIM; i++){
-            if (boardState[i][j] != firstCell){
+            if (boardState[i * DIM + j] != firstCell){
                 found = false;
                 break;
             }
@@ -52,13 +52,13 @@ function checkWinning(boardState){
 
     // Check diagonal
     // Right diagonal
-    let firstCell = boardState[0][0]
+    let firstCell = boardState[0]
 
     if (firstCell != null){
         let found = true;
 
         for (let i=1; i < DIM; i++){
-            if (boardState[i][i] != firstCell){
+            if (boardState[i * DIM + i] != firstCell){
                 found = false;
                 break;
             }
@@ -70,13 +70,13 @@ function checkWinning(boardState){
     }
 
     // Left diagonal
-    firstCell = boardState[0][DIM - 1]
+    firstCell = boardState[DIM - 1]
 
     if (firstCell != null){
         let found = true;
 
         for (let i=1; i < DIM; i++){
-            if (boardState[i][DIM - 1 - i] != firstCell){
+            if (boardState[i * DIM + (DIM - 1 - i)] != firstCell){
                 found = false;
                 break;
             }
@@ -88,6 +88,16 @@ function checkWinning(boardState){
     }
 
     return false;
+}
+
+function checkFull(boardState){
+    for (let i=0; i < TABLE_SIZE; i++){
+        if (boardState[i] == null){
+            return false;
+        }
+    }
+
+    return true;
 }
 
 const Cell = ({value, tickCell}) => {
@@ -103,8 +113,16 @@ const Board = (props) => {
     // Use an array of TABLE_SIZE
     const [boardState, setBoardState] = useState(Array(TABLE_SIZE).fill(EMPTY));
     const [isX, setIsX] = useState(true);
+    const [isWin, setWin] = useState(false);
+    const [isFull, setFull] = useState(false);
 
     const tickCell = (i) => {
+        // Full board or win
+        if (isWin || isFull){
+            return;
+        }
+
+        // Already filled
         if (boardState[i] != null){
             return;
         }
@@ -113,6 +131,8 @@ const Board = (props) => {
         newBoardState[i] = isX ? X : O
         setIsX(!isX)
         setBoardState(newBoardState)
+        setWin(checkWinning(newBoardState))
+        setFull(checkFull(newBoardState))
     }
 
     // Create the structure for the board
@@ -130,8 +150,12 @@ const Board = (props) => {
     return (
         <div>
             <div>
-
+                <p>Turn of {isX? X: O}</p>
+                <p>{isWin? `Winner is ${isX?O:X}` : null}</p>
+                <p>{isFull? "Tie" : null}</p>
             </div>
+            <br/>
+
             <div>
                 {boardMap.map(row => {
                     return (
