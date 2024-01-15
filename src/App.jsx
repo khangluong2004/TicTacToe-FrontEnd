@@ -1,4 +1,4 @@
-import Board from "./Board.jsx"
+import Board from "./Board.jsx";
 
 // AWS Cognito authenticator setup
 import { Authenticator } from '@aws-amplify/ui-react';
