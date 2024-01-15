@@ -10,79 +10,81 @@ const O = 'O';
 function checkWinning(boardState){
     // Check rows
     for (let i=0; i < DIM; i++){
-        let firstCell = boardState[i * DIM];
+        let preCell = boardState[i * DIM];
+        let count = 1;
 
-        if (firstCell == null){
-            continue;
-        }
-
-        let found = true;
         for (let j=1; j < DIM; j++){
-            if (boardState[i * DIM + j] != firstCell){
-                found = false;
-                break;
-            }
-        }
+            let curCell = boardState[i * DIM + j];
 
-        if (found){
-            return true;
+            if (curCell == preCell){
+                count++;
+            } else {
+                preCell = curCell;
+                count = 1;
+            }
+
+            if (count == 3 && preCell != null){
+                return true;
+            }
         }
     }
 
     // Check columns
     for (let j=0; j < DIM; j++){
-        let firstCell = boardState[j];
+        let preCell = boardState[j];
+        let count = 1;
 
-        if (firstCell == null){
-            continue;
-        }
-        
-        let found = true;
         for (let i=1; i < DIM; i++){
-            if (boardState[i * DIM + j] != firstCell){
-                found = false;
-                break;
-            }
-        }
+            let curCell = boardState[i * DIM + j];
 
-        if (found){
-            return true;
+            if (curCell == preCell){
+                count++;
+            } else {
+                preCell = curCell;
+                count = 1;
+            }
+
+            if (count == 3 && preCell != null){
+                return true;
+            }
         }
     }
 
     // Check diagonal
     // Right diagonal
-    let firstCell = boardState[0]
+    let preCell = boardState[0];
+    let count = 1;
 
-    if (firstCell != null){
-        let found = true;
+    for (let i=1; i < DIM; i++){
+        let curCell = boardState[i * DIM + i];
 
-        for (let i=1; i < DIM; i++){
-            if (boardState[i * DIM + i] != firstCell){
-                found = false;
-                break;
-            }
+        if (curCell == preCell){
+            count++;
+        } else {
+            preCell = curCell;
+            count = 1;
         }
 
-        if (found){
+        if (count == 3 && preCell != null){
             return true;
         }
     }
 
     // Left diagonal
-    firstCell = boardState[DIM - 1]
+    preCell = boardState[DIM - 1];
+    count = 1;
 
-    if (firstCell != null){
-        let found = true;
+    for (let i=1; i < DIM; i++){
+        let curCell = boardState[i * DIM + DIM - 1 - i];
 
-        for (let i=1; i < DIM; i++){
-            if (boardState[i * DIM + (DIM - 1 - i)] != firstCell){
-                found = false;
-                break;
-            }
+        if (curCell == preCell){
+            count++;
+        } else {
+            preCell = curCell;
+            count = 1;
         }
 
-        if (found){
+        if (count == 3 && preCell != null){
             return true;
         }
     }
