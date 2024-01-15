@@ -3,6 +3,8 @@ import { useEffect, useState } from "react"
 const DIM = 4;
 const TABLE_SIZE = DIM * DIM;
 
+const WINNING_ITEMS = 3;
+
 const EMPTY = null;
 const X = 'X';
 const O = 'O';
@@ -23,7 +25,7 @@ function checkWinning(boardState){
                 count = 1;
             }
 
-            if (count == 3 && preCell != null){
+            if (count == WINNING_ITEMS && preCell != null){
                 return true;
             }
         }
@@ -44,7 +46,7 @@ function checkWinning(boardState){
                 count = 1;
             }
 
-            if (count == 3 && preCell != null){
+            if (count == WINNING_ITEMS && preCell != null){
                 return true;
             }
         }
@@ -52,42 +54,51 @@ function checkWinning(boardState){
 
     // Check diagonal
     // Right diagonal
-    let preCell = boardState[0];
-    let count = 1;
+    for (let i=0; i < DIM; i++){
+        for (let j=0; j < DIM; j++){
 
-    for (let i=1; i < DIM; i++){
-        let curCell = boardState[i * DIM + i];
+            // Check if contains 3 diagonal elements
+            if ((i + 2) >= DIM || (j + 2) >= DIM){
+                continue;
+            }
 
-        if (curCell == preCell){
-            count++;
-        } else {
-            preCell = curCell;
-            count = 1;
+            let firstItem = boardState[i * DIM + j]
+            let secondItem = boardState[(i + 1) * DIM + (j + 1)]
+            let thirdItem = boardState[(i + 2) * DIM + (j + 2)]
+
+            if (firstItem == null){
+                continue;
+            }
+
+            if (firstItem == secondItem && secondItem == thirdItem){
+                return true;
+            }
         }
-
-        if (count == 3 && preCell != null){
-            return true;
-        }
-    }
+    }   
 
     // Left diagonal
-    preCell = boardState[DIM - 1];
-    count = 1;
+    for (let i=0; i < DIM; i++){
+        for (let j=0; j < DIM; j++){
 
-    for (let i=1; i < DIM; i++){
-        let curCell = boardState[i * DIM + DIM - 1 - i];
+            // Check if the third one is still in the board
+            if ((j - 2) < 0 || (i + 2) >= DIM){
+                continue;
+            }
 
-        if (curCell == preCell){
-            count++;
-        } else {
-            preCell = curCell;
-            count = 1;
-        }
+            let firstItem = boardState[i * DIM + j];
+            let secondItem = boardState[(i + 1) * DIM + j - 1];
+            let thirdItem = boardState[(i + 2) * DIM + j - 2];
 
-        if (count == 3 && preCell != null){
-            return true;
+            if (firstItem == null){
+                continue;
+            }
+
+            if (firstItem == secondItem && secondItem == thirdItem){
+                return true;
+            }
         }
     }
+    
 
     return false;
 }
@@ -153,7 +164,7 @@ const Board = (props) => {
         <div>
             <div>
                 <p>Turn of {isX? X: O}</p>
-                <p>{isWin? `Winner is ${isX?O:X}` : null}</p>
+                <p className="font-bold">{isWin? `Winner is ${isX?O:X}` : null}</p>
                 <p>{isFull? "Tie" : null}</p>
             </div>
             <br/>
