@@ -13,11 +13,11 @@ function checkWinning(boardState){
     // Check rows
     for (let i=0; i < DIM; i++){
         for (let j=0; j < DIM - 2; j++){
-            if (boardState[i][j] == EMPTY){
+            if (boardState[i * DIM + j] == EMPTY){
                 continue;
             }
 
-            if (boardState[i][j] == boardState[i][j+1] && boardState[i][j] == boardState[i][j+2]){
+            if (boardState[i * DIM + j] == boardState[i * DIM + j+1] && boardState[i * DIM + j+1] == boardState[i * DIM + j+2]){
                 return true;
             }
         }
@@ -26,11 +26,11 @@ function checkWinning(boardState){
     // Check columns
     for (let i=0; i < DIM - 2; i++){
         for (let j=0; j < DIM; j++){
-            if (boardState[i][j] == EMPTY){
+            if (boardState[i * DIM + j] == EMPTY){
                 continue;
             }
 
-            if (boardState[i][j] == boardState[i+1][j] && boardState[i+1][j] == boardState[i+2][j]){
+            if (boardState[i * DIM + j] == boardState[(i+1) * DIM + j] && boardState[(i+1) * DIM + j] == boardState[(i+2) * DIM + j]){
                 return true;
             }
         }
