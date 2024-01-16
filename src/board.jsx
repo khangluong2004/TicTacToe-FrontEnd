@@ -12,41 +12,25 @@ const O = 'O';
 function checkWinning(boardState){
     // Check rows
     for (let i=0; i < DIM; i++){
-        let preCell = boardState[i * DIM];
-        let count = 1;
-
-        for (let j=1; j < DIM; j++){
-            let curCell = boardState[i * DIM + j];
-
-            if (curCell == preCell){
-                count++;
-            } else {
-                preCell = curCell;
-                count = 1;
+        for (let j=0; j < DIM - 2; j++){
+            if (boardState[i][j] == EMPTY){
+                continue;
             }
 
-            if (count == WINNING_ITEMS && preCell != null){
+            if (boardState[i][j] == boardState[i][j+1] && boardState[i][j] == boardState[i][j+2]){
                 return true;
             }
         }
     }
 
     // Check columns
-    for (let j=0; j < DIM; j++){
-        let preCell = boardState[j];
-        let count = 1;
-
-        for (let i=1; i < DIM; i++){
-            let curCell = boardState[i * DIM + j];
-
-            if (curCell == preCell){
-                count++;
-            } else {
-                preCell = curCell;
-                count = 1;
+    for (let i=0; i < DIM - 2; i++){
+        for (let j=0; j < DIM; j++){
+            if (boardState[i][j] == EMPTY){
+                continue;
             }
 
-            if (count == WINNING_ITEMS && preCell != null){
+            if (boardState[i][j] == boardState[i+1][j] && boardState[i+1][j] == boardState[i+2][j]){
                 return true;
             }
         }
