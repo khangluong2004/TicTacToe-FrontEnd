@@ -54,13 +54,8 @@ function checkWinning(boardState){
 
     // Check diagonal
     // Right diagonal
-    for (let i=0; i < DIM; i++){
-        for (let j=0; j < DIM; j++){
-
-            // Check if contains 3 diagonal elements
-            if ((i + 2) >= DIM || (j + 2) >= DIM){
-                continue;
-            }
+    for (let i=0; i < DIM - 2; i++){
+        for (let j=0; j < DIM - 2; j++){
 
             let firstItem = boardState[i * DIM + j]
             let secondItem = boardState[(i + 1) * DIM + (j + 1)]
@@ -77,13 +72,8 @@ function checkWinning(boardState){
     }   
 
     // Left diagonal
-    for (let i=0; i < DIM; i++){
-        for (let j=0; j < DIM; j++){
-
-            // Check if the third one is still in the board
-            if ((j - 2) < 0 || (i + 2) >= DIM){
-                continue;
-            }
+    for (let i=0; i < DIM - 2; i++){
+        for (let j=2; j < DIM; j++){
 
             let firstItem = boardState[i * DIM + j];
             let secondItem = boardState[(i + 1) * DIM + j - 1];
