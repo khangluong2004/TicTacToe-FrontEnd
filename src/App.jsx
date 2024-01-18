@@ -62,7 +62,7 @@ function App() {
                   <h3 className="font-bold"> Rules: </h3>
                   <ol className="list-decimal">
                     <li> In the first move, you could only move in the 4 corner </li>
-                    <li> Same as TicTacToe: Get 3 in a row, column, diagnoal to win </li>
+                    <li> Same as TicTacToe: Get 3 in a row, column, diagonal to win </li>
                     <li> Since winning is not too hard, try to give a bot some advantage </li>
                   </ol>
                 </div>
