@@ -120,11 +120,6 @@ const Board = (props) => {
     // TODO: Check the async sequence and the bot
 
     const botMove = async(newBoardState, nextX) => {
-        // Full board or win
-        if (isWin || isFull){
-            return;
-        }
-
         let data = await botApiNextMove(newBoardState, nextX);
         console.log(data);
 
@@ -133,8 +128,8 @@ const Board = (props) => {
 
         setBoardState(nextBoardState)
         setIsX(!nextX)
-        setWin(checkWinning(newBoardState))
-        setFull(checkFull(newBoardState))
+        setWin(checkWinning(nextBoardState))
+        setFull(checkFull(nextBoardState))
     }
 
     const tickCell = async (i) => {
@@ -161,18 +156,26 @@ const Board = (props) => {
         newBoardState[i] = isX ? X : O
 
         let nextX = !isX;
+        let nextIsWin = checkWinning(newBoardState);
+        let nextIsFull = checkFull(newBoardState);
 
         setIsX(nextX);
         setBoardState(newBoardState)
-        setWin(checkWinning(newBoardState))
-        setFull(checkFull(newBoardState))
+        setWin(nextIsWin)
+        setFull(nextIsFull)
+
+        console.log(nextIsWin)
 
         // Set off firstTurn
         if (isFirstTurn){
             setFirstTurn(!isFirstTurn);
         }
 
-        
+        // Check winning or full
+        if (nextIsWin || nextIsFull){
+            return;
+        }
+
         // Call the bot
         await botMove(newBoardState, nextX);
     }
