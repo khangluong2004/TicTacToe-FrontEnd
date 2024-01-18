@@ -53,6 +53,10 @@ function App() {
                     The first player is guaranteed to win. It's a bit mean to let the bot goes first, so I let you go 
                     first :D In exchange, don't be too harsh with my bot
                   </p>
+                  <p>
+                    <strong> Disclaimer: </strong> When there are multiple way to "lose", the bot behaviour might be 
+                    random, since it detects that all moves suck, and just pick one pseudo-randomly.
+                  </p>
                   <br/>
 
                   <h3 className="font-bold"> Rules: </h3>
