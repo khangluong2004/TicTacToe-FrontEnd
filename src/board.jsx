@@ -148,7 +148,7 @@ const Board = (props) => {
             return;
         }
 
-        if (isFirstTurn && isX == X && !checkCorner(i)){
+        if (isFirstTurn && isX && !checkCorner(i)){
             return;
         }
         

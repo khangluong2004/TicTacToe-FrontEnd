@@ -38,10 +38,33 @@ function App() {
 
           return(
             <div>
-              <div className="flex justify-center items-center pt-10">
-                <h2 className="font-bold p-2"> Welcome </h2>
+              <div className="flex items-center justify-center pt-10">
+                <h2 className="font-bold p-2"> Welcome to 4x4 TicTacToe </h2>
                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded py-2 px-4" onClick={signOut}> Sign out </button>
               </div>
+
+              <div className="flex flex-col items-center justify-center pt-10 px-10">
+                <div>
+                  <p> 
+                    <strong> Good news: </strong> When move to 4x4, the bot turns from unbeatable to definitely beatable, 
+                    despite being a pain to implement :0  
+                  </p>
+                  <p>
+                    The first player is guaranteed to win. It's a bit mean to let the bot goes first, so I let you go 
+                    first :D In exchange, don't be too harsh with my bot
+                  </p>
+                  <br/>
+
+                  <h3 className="font-bold"> Rules: </h3>
+                  <ol className="list-decimal">
+                    <li> In the first move, you could only move in the 4 corner </li>
+                    <li> Same as TicTacToe: Get 3 in a row, column, diagnoal to win </li>
+                    <li> Since winning is not too hard, try to give a bot some advantage </li>
+                  </ol>
+                </div>
+              </div>
+
+
               <div className="flex items-center justify-center pb-10 h-dvh">
                 <Board />
               </div>
